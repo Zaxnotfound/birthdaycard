@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="BirthdayStyle.css"> 
+    <title>Birthday Card Ni Pol</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="front"></div>
+                
+                <div class="letter">
+                    <div class="card-title"><h1>HAPPEHH BIRTHDAY BOY</h1></div>
+                    <p>Dear Nick,</p>
+                    <p>
+                        Since wala ako mabibigay sayo physically kasi di naman ako pupunta sa birthday mo HAHAHHAH, eto nalang bibigay ko sayo, digital birthday card. 
+                        Sana magustuhan mo kahit di tayo nagkita sa birthday mo boy.
+                    </p>
+                    <p class="signature">Pol</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gif-container" id="gifContainer">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTFhZWJmbTV1c25zYm92cnV2MTQyZXFlNGt6MjJkNGE3bmV3d2gwZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UpzSszqw1BjD87KoPt/giphy.gif" class="gif-item gif-1" alt="Birthday GIF 1">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXFyOHMwODRjeHVlbjg3aXJhMTJqM2g4dmttdHVoOGFsMHRpb2RyciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/TjSPQgowhhJdHgvnwA/giphy.gif" class="gif-item gif-2" alt="Birthday GIF 2">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGU4YWZ4eWFpY2RmemczYmRwejRweDJnc2Y2NmprZm1iOTY3OHQwZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bUGnyabq6EHtD8TTyV/giphy.gif" class="gif-item gif-3" alt="Birthday GIF 3">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHBmZXJuZWZncmx6bjBieHBjdXM5MXBhMmU0Mng1dDdpYzhpemNvaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vPzbDN4rBxuvtpSpzF/giphy.gif" class="gif-item gif-4" alt="Birthday GIF 4">
+    </div>
+
+
+    <script>
+const envelope = document.getElementById('envelope');
+const gifContainer = document.getElementById('gifContainer');
+let confettiInterval; // Para sa paulit-ulit na confetti
+
+// 1. I-setup ang Audio Object (Palitan mo 'yung 'happy-birthday.mp3' ng tamang file name mo)
+const bgMusic = new Audio('happy-birthdayeye.mp3'); 
+bgMusic.loop = true; // Para paulit-ulit ang kanta hangga't nakabukas ang sobre
+
+envelope.addEventListener('click', () => {
+    envelope.classList.toggle('open');
+    
+    if (envelope.classList.contains('open')) {
+        
+        // 2. Patugtugin ang kanta pagka-open
+        // Pwede ring lagyan ng bgMusic.volume = 0.5; (kung gusto mo medyo mahina)
+        bgMusic.play().catch(error => {
+            console.log("Audio playback blocked by browser. Kailangan muna ng user interaction.", error);
+        });
+
+        // Paulit-ulit na sabog ng Confetti kada 700ms
+        pasaBogConfetti(); 
+        confettiInterval = setInterval(() => {
+            pasaBogConfetti();
+        }, 700);
+
+        // Lalabas ang mga GIFs matapos ang 1 segundo
+        setTimeout(() => {
+            gifContainer.style.display = 'block';
+        }, 1000);
+
+    } else {
+        // 3. KAPAG SINARA: Patigilin ang confetti, itago ang GIFs, at i-pause ang tugtog
+        clearInterval(confettiInterval);
+        gifContainer.style.display = 'none';
+        
+        bgMusic.pause();
+        bgMusic.currentTime = 0; // I-reset ang kanta sa simula para swabe kapag binuksan ulit
+    }
+});
+
+// Function para sa confetti shower
+function pasaBogConfetti() {
+    confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { x: 0.2, y: 0.8 } 
+    });
+    
+    confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { x: 0.8, y: 0.8 }
+    });
+}
+    </script>
+</body>
+</html>
